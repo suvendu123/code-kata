@@ -11,23 +11,27 @@ public class CheckOut {
 
 	private List<Item> items;
 	private ItemService itemService;
-	private Map<String, String> rules;
-	private double discountedPrice;
+	private Map<String, Rule> rules;
+	private double totalDiscount;
 
 	public CheckOut() {
 		items = new ArrayList<Item>();
 		itemService = new ItemService();
-		rules = new HashMap<String, String>();
+		rules = new HashMap<String, Rule>();
 	}
 
 	public Double total() {
 		Map<Item, Integer> itemCountMap = getCountMap();
 		calculateDiscout(itemCountMap);
+		return totalDiscount + getTotal(itemCountMap);
+	}
+
+	private double getTotal(Map<Item, Integer> itemCountMap) {
 		double total = 0;
 		for (Map.Entry<Item, Integer> entry : itemCountMap.entrySet()) {
 			total += entry.getKey().getPrice() * entry.getValue();
 		}
-		return discountedPrice + total;
+		return total;
 	}
 
 	private void calculateDiscout(Map<Item, Integer> itemCountMap) {
@@ -40,25 +44,13 @@ public class CheckOut {
 
 	}
 
-	private void applyRule(Item item, Map<Item, Integer> itemCountMap, String rule) {
-		if (rule.equalsIgnoreCase("3 for 130")) {
-			if (itemCountMap.get(item) > 3) {
-				itemCountMap.put(item, itemCountMap.get(item) - 3);
-				discountedPrice += 130;
-			} else if (itemCountMap.get(item) == 3) {
-				itemCountMap.remove(item);
-				discountedPrice += 130;
-			}
-		}
-		
-		if (rule.equalsIgnoreCase("2 for 45")) {
-			if (itemCountMap.get(item) > 2) {
-				itemCountMap.put(item, itemCountMap.get(item) - 2);
-				discountedPrice += 45;
-			} else if (itemCountMap.get(item) == 2) {
-				itemCountMap.remove(item);
-				discountedPrice += 45;
-			}
+	private void applyRule(Item item, Map<Item, Integer> itemCountMap, Rule rule) {
+		if (itemCountMap.get(item) > rule.getQuantity()) {
+			itemCountMap.put(item, itemCountMap.get(item) - rule.getQuantity());
+			totalDiscount += rule.getDiscountedPrice();
+		} else if (itemCountMap.get(item) == rule.getQuantity()) {
+			itemCountMap.remove(item);
+			totalDiscount += rule.getDiscountedPrice();
 		}
 
 	}
@@ -71,8 +63,8 @@ public class CheckOut {
 		items.add(itemService.getByCode(itemCode));
 	}
 
-	public void addRule(String itemCode, String rule) {
-		rules.put(itemCode, rule);
+	public void addRule(Rule rule) {
+		rules.put(rule.getItemCode(), rule);
 	}
 
 }
