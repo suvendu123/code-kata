@@ -45,5 +45,15 @@ public class CheckOutShould {
 		assertEquals(new Double(160), checkOut.total());
 
 	}
+	@Test
+	public void should_apply_a_diffrent_rule_and_calculate_total() {
+		checkOut.addRule("A", "3 for 130");
+		checkOut.addRule("B", "2 for 45");
+		checkOut.scan("A");
+		checkOut.scan("B");
+		checkOut.scan("B");
+		assertEquals(new Double(95), checkOut.total());
+
+	}
 
 }
