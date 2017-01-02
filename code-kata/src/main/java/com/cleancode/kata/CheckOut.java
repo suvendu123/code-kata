@@ -21,4 +21,8 @@ public class CheckOut {
 		items.add(itemService.getByCode(itemCode));
 	}
 
+	public void addRule(String itemCode, String rule) {
+		
+	}
+
 }
