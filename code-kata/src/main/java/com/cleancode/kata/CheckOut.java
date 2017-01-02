@@ -50,6 +50,16 @@ public class CheckOut {
 				discountedPrice += 130;
 			}
 		}
+		
+		if (rule.equalsIgnoreCase("2 for 45")) {
+			if (itemCountMap.get(item) > 2) {
+				itemCountMap.put(item, itemCountMap.get(item) - 2);
+				discountedPrice += 45;
+			} else if (itemCountMap.get(item) == 2) {
+				itemCountMap.remove(item);
+				discountedPrice += 45;
+			}
+		}
 
 	}
 
