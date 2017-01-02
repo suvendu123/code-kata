@@ -2,14 +2,19 @@ package com.cleancode.kata;
 
 public class CheckOut {
 
-	private String itemCode;
-
+	private double price;
+	
 	public Double total() {
-		return itemCode != null && itemCode.equals("A") ? 50.00 : 0.00;
+		return this.price;
 	}
 
 	public void scan(String itemCode) {
-		this.itemCode = itemCode;
+		if(itemCode.equals("B")){
+			price +=30;
+		}
+		if(itemCode.equals("A")){
+			price +=50;
+		}
 	}
 
 }
