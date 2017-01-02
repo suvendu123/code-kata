@@ -10,7 +10,7 @@ public class CheckOutShould {
 	private CheckOut checkOut;
 	
 	@Before
-	private void setUp(){
+	public void setUp(){
 		checkOut =  new CheckOut();
 	}
     @Test
@@ -23,6 +23,14 @@ public class CheckOutShould {
     public void should_return_price_for_one_item(){
         checkOut.scan("A");
         assertEquals(new Double(50), checkOut.total());
+        
+    }
+    
+    @Test
+    public void should_scan_two_item_and_return_total_price(){
+        checkOut.scan("A");
+        checkOut.scan("B");
+        assertEquals(new Double(80), checkOut.total());
         
     }
    
