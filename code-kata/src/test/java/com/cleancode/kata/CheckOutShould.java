@@ -12,6 +12,14 @@ public class CheckOutShould {
         assertEquals(new Double(0), checkOut.total());
         
     }
+    
+    @Test
+    public void should_return_price_for_one_item(){
+        CheckOut checkOut = new CheckOut();
+        checkOut.scan("A");
+        assertEquals(new Double(50), checkOut.total());
+        
+    }
    
 
 }
