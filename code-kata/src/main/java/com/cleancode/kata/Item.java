@@ -1,5 +1,8 @@
 package com.cleancode.kata;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
 public class Item {
 
 	private String itemCode;
@@ -26,4 +29,18 @@ public class Item {
 		this.price = price;
 	}
 
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder().append(itemCode).toHashCode();
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (obj instanceof Item) {
+			final Item other = (Item) obj;
+			return new EqualsBuilder().append(itemCode, other.getItemCode()).isEquals();
+		} else {
+			return false;
+		}
+	}
 }
