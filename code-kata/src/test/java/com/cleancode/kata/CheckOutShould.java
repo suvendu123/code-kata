@@ -39,8 +39,7 @@ public class CheckOutShould {
     public void should_apply_rule_and_calculate_total() {
         checkOut.addRule(new Rule("A", 3, 130.00));
         checkOut.scan("A");
-        checkOut.scan("A");
-        checkOut.scan("A");
+        scanItemTwoTimes("A");
         checkOut.scan("B");
         assertEquals(new Double(160), checkOut.total());
 
@@ -51,8 +50,7 @@ public class CheckOutShould {
         checkOut.addRule(new Rule("A", 3, 130.00));
         checkOut.addRule(new Rule("B", 2, 45.00));
         checkOut.scan("A");
-        checkOut.scan("B");
-        checkOut.scan("B");
+        scanItemTwoTimes("B");
         assertEquals(new Double(95), checkOut.total());
 
     }
@@ -60,13 +58,16 @@ public class CheckOutShould {
     @Test
     public void should_apply_rule_for_multiple_divided_by_quantity() {
         checkOut.addRule(new Rule("B", 2, 45.00));
-        checkOut.scan("B");
-        checkOut.scan("B");
-        checkOut.scan("B");
-        checkOut.scan("B");
+        scanItemTwoTimes("B");
+        scanItemTwoTimes("B");
         checkOut.scan("B");
         assertEquals(new Double(120), checkOut.total());
 
+    }
+
+    private void scanItemTwoTimes(String item) {
+        checkOut.scan(item);
+        checkOut.scan(item);
     }
 
 }

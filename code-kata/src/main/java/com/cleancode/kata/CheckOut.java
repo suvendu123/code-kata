@@ -26,6 +26,14 @@ public class CheckOut {
         return totalDiscount + getTotal(itemCountMap);
     }
 
+    public void scan(String itemCode) {
+        items.add(itemService.getByCode(itemCode));
+    }
+
+    public void addRule(Rule rule) {
+        rules.put(rule.getItemCode(), rule);
+    }
+
     private double getTotal(Map<Item, Integer> itemCountMap) {
         double total = 0;
         for (Map.Entry<Item, Integer> entry : itemCountMap.entrySet()) {
@@ -35,38 +43,22 @@ public class CheckOut {
     }
 
     private void calculateDiscout(Map<Item, Integer> itemCountMap) {
-        for (String itemCode : rules.keySet()) {
-            Item item = itemService.getByCode(itemCode);
-            if (itemCountMap.containsKey(item)) {
-                applyRule(item, itemCountMap, rules.get(itemCode));
-            }
+        for (Map.Entry<String, Rule> entry : rules.entrySet()) {
+            applyRule(itemCountMap, entry);
         }
 
     }
 
-    private void applyRule(Item item, Map<Item, Integer> itemCountMap, Rule rule) {
-        int divident = itemCountMap.get(item) / rule.getQuantity();
-        int reminder = itemCountMap.get(item) % rule.getQuantity();
-        if (divident != 0) {
-            totalDiscount += divident * rule.getDiscountedPrice();
+    private void applyRule(Map<Item, Integer> itemCountMap, Map.Entry<String, Rule> entry) {
+        Item item = itemService.getByCode(entry.getKey());
+        if (itemCountMap.containsKey(item)) {
+            totalDiscount += entry.getValue().apply(item, itemCountMap.get(item));
+            itemCountMap.remove(item);
         }
-        if (reminder != 0) {
-            totalDiscount += reminder * item.getPrice();
-        }
-        itemCountMap.remove(item);
-       
     }
 
     private Map<Item, Integer> getCountMap() {
         return items.stream().collect(toMap(item -> item, value -> 1, Integer::sum));
-    }
-
-    public void scan(String itemCode) {
-        items.add(itemService.getByCode(itemCode));
-    }
-
-    public void addRule(Rule rule) {
-        rules.put(rule.getItemCode(), rule);
     }
 
 }
