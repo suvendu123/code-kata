@@ -84,6 +84,19 @@ public class CheckOutShould {
 
     }
     
+    @Test
+    public void should_apply_cross_product_promotion_for_multiple_in_number() {
+        //given
+        scanItemTwoTimes("A");
+        scanItemTwoTimes("B");
+        
+        //when
+        checkOut.addPromotion(new CrossProductPromotion(asList("B", "A") , 70.00));
+       
+        //then
+        assertEquals(new Double(140), checkOut.total());
+
+    }
 
     private void scanItemTwoTimes(String item) {
         checkOut.scan(item);
