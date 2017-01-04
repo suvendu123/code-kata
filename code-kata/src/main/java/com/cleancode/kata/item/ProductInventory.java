@@ -23,7 +23,7 @@ public class ProductInventory {
 	}
 
 	public void addProduct(Product product) {
-		
+		products.put(product.getItemCode(), product);
 	}
 
 }
