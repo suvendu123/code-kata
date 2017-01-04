@@ -19,20 +19,22 @@ public class CrossProductPromotion implements Promotion {
 
     @Override
     public double apply(Cart cart) {
-        double price=0;
         List<Product> products = getProducts(cart);
-        if(isItemPresentInCart(products , cart.getItemsMap())){
-            price = applyDiscount(products, cart.getItemsMap());   
+        if (isItemPresentInCart(products, cart.getItemsMap())) {
+            return applyDiscount(products, cart.getItemsMap());
         }
-        return price;
+        return 0;
     }
 
     private double applyDiscount(List<Product> products, Map<Product, Integer> itemsMap) {
         for (Product product : products) {
-            itemsMap.remove(product);
+            if (itemsMap.get(product) != 0) {
+                itemsMap.put(product, itemsMap.get(product) - 1);
+            } else {
+                itemsMap.remove(product);
+            }
         }
-        return price;
-       
+        return isItemPresentInCart(products, itemsMap) ? price += applyDiscount(products, itemsMap) : price;
     }
 
     private List<Product> getProducts(Cart cart) {
@@ -41,6 +43,9 @@ public class CrossProductPromotion implements Promotion {
 
     private boolean isItemPresentInCart(List<Product> products, Map<Product, Integer> itemsMap) {
         for (Product product : products) {
+            if (itemsMap.get(product) == 0) {
+                itemsMap.remove(product);
+            }
             if (itemsMap.getOrDefault(product, null) == null) {
                 return false;
             }
