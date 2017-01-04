@@ -18,6 +18,10 @@ public class CrossProductPromotion implements Promotion {
 	}
 
 	@Override
+	public double getPrice() {
+		return price;
+	}
+	@Override
 	public double apply(Cart cart) {
 		List<Product> products = getProducts(cart);
 		return isItemPresentInCart(products, cart.getItemsMap()) ? applyDiscount(products, cart.getItemsMap()) : 0;
@@ -36,7 +40,7 @@ public class CrossProductPromotion implements Promotion {
 
 	private boolean isItemPresentInCart(List<Product> products, Map<Product, Integer> itemsMap) {
 		for (Product product : products) {
-			if (itemsMap.get(product) == 0) {
+			if (itemsMap.containsKey(product) && itemsMap.get(product) == 0) {
 				itemsMap.remove(product);
 			}
 			if (itemsMap.getOrDefault(product, null) == null) {
@@ -45,5 +49,7 @@ public class CrossProductPromotion implements Promotion {
 		}
 		return true;
 	}
+
+	
 
 }

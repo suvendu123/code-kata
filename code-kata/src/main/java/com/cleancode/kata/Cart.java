@@ -1,5 +1,6 @@
 package com.cleancode.kata;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,7 @@ public class Cart {
     }
 
     public void applyPromotion(List<Promotion> promotions) {
+    	promotions.sort(Comparator.comparing(Promotion:: getPrice));
         promotions.forEach(promotion -> totalPrice += promotion.apply(this));
 
     }

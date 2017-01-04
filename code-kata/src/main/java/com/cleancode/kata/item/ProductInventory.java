@@ -15,6 +15,7 @@ public class ProductInventory {
 		products = new HashMap<String, Product>();
 		products.put("A", new Product("A", 50.00));
 		products.put("B", new Product("B", 30.00));
+		products.put("C", new Product("C", 20.00));
 
 	}
 

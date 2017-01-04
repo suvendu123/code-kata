@@ -27,7 +27,12 @@ public class ProductPromotion implements Promotion {
     public double getDiscountedPrice() {
         return discountedPrice;
     }
-
+    
+    @Override
+	public double getPrice() {
+		return discountedPrice;
+	}
+    
     @Override
     public double apply(Cart cart) {
         Product product = cart.getProductInventory().getByCode(itemCode);

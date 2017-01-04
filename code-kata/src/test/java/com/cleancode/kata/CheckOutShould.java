@@ -113,7 +113,7 @@ public class CheckOutShould {
         checkOut.addPromotion(new ProductPromotion("A", 3, 130.00));
         
         //then
-        assertEquals(new Double(240), checkOut.total());
+        assertEquals(new Double(220), checkOut.total());
 
     }
     
