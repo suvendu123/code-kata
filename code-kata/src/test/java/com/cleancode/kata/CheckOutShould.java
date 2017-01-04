@@ -97,6 +97,23 @@ public class CheckOutShould {
         assertEquals(new Double(140), checkOut.total());
 
     }
+    
+    @Test
+    public void should_apply_type_promotion_at_the_same_time() {
+        //given
+        scanItemTwoTimes("A");
+        scanItemTwoTimes("B");
+        scanItemTwoTimes("B");
+        checkOut.scan("A");
+        
+               
+        //when
+        checkOut.addPromotion(new CrossProductPromotion(asList("B", "A") , 70.00));
+        checkOut.addPromotion(new ProductPromotion("B", 2, 45.00));
+        //then
+        assertEquals(new Double(240), checkOut.total());
+
+    }
 
     private void scanItemTwoTimes(String item) {
         checkOut.scan(item);
