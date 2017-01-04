@@ -3,15 +3,19 @@ package com.cleancode.kata;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.cleancode.kata.item.Item;
+import com.cleancode.kata.item.ItemInventory;
+import com.cleancode.kata.promotion.Promotion;
+
 public class Cart {
 
     private Map<Item, Integer> itemsMap;
-    private ItemService itemService;
+    private ItemInventory itemService;
     private double totalPrice;
 
     public Cart() {
         itemsMap = new HashMap<Item, Integer>();
-        itemService = new ItemService();
+        itemService = new ItemInventory();
     }
 
     public void addItem(Item item) {
@@ -23,13 +27,13 @@ public class Cart {
 
     }
 
-    public void applyRule(Map<String, Rule> rules) {
-        for (Map.Entry<String, Rule> entry : rules.entrySet()) {
+    public void applyRule(Map<String, Promotion> rules) {
+        for (Map.Entry<String, Promotion> entry : rules.entrySet()) {
             applyRuleForItem(entry);
         }
     }
 
-    private void applyRuleForItem(Map.Entry<String, Rule> entry) {
+    private void applyRuleForItem(Map.Entry<String, Promotion> entry) {
         Item item = itemService.getByCode(entry.getKey());
         if (itemsMap.containsKey(item)) {
             totalPrice += entry.getValue().apply(item, itemsMap.get(item));

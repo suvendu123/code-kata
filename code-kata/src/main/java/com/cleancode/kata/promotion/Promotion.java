@@ -1,11 +1,13 @@
-package com.cleancode.kata;
+package com.cleancode.kata.promotion;
 
-public class Rule {
+import com.cleancode.kata.item.Item;
+
+public class Promotion {
     private String itemCode;
     private int quantity;
     private double discountedPrice;
 
-    public Rule(String itemCode, int quantity, double discountedPrice) {
+    public Promotion(String itemCode, int quantity, double discountedPrice) {
         this.itemCode = itemCode;
         this.quantity = quantity;
         this.discountedPrice = discountedPrice;

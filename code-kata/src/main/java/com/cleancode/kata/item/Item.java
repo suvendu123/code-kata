@@ -1,4 +1,4 @@
-package com.cleancode.kata;
+package com.cleancode.kata.item;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;

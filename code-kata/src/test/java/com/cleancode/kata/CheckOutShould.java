@@ -5,6 +5,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.cleancode.kata.promotion.Promotion;
+
 public class CheckOutShould {
 
     private CheckOut checkOut;
@@ -37,7 +39,7 @@ public class CheckOutShould {
 
     @Test
     public void should_apply_rule_and_calculate_total() {
-        checkOut.addRule(new Rule("A", 3, 130.00));
+        checkOut.addRule(new Promotion("A", 3, 130.00));
         checkOut.scan("A");
         scanItemTwoTimes("A");
         checkOut.scan("B");
@@ -47,8 +49,8 @@ public class CheckOutShould {
 
     @Test
     public void should_apply_a_diffrent_rule_and_calculate_total() {
-        checkOut.addRule(new Rule("A", 3, 130.00));
-        checkOut.addRule(new Rule("B", 2, 45.00));
+        checkOut.addRule(new Promotion("A", 3, 130.00));
+        checkOut.addRule(new Promotion("B", 2, 45.00));
         checkOut.scan("A");
         scanItemTwoTimes("B");
         assertEquals(new Double(95), checkOut.total());
@@ -57,7 +59,7 @@ public class CheckOutShould {
 
     @Test
     public void should_apply_rule_for_multiple_divided_by_quantity() {
-        checkOut.addRule(new Rule("B", 2, 45.00));
+        checkOut.addRule(new Promotion("B", 2, 45.00));
         scanItemTwoTimes("B");
         scanItemTwoTimes("B");
         checkOut.scan("B");

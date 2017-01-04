@@ -1,13 +1,13 @@
-package com.cleancode.kata;
+package com.cleancode.kata.item;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class ItemService {
+public class ItemInventory {
 
 	private Map<String, Item> items;
 
-	public ItemService() {
+	public ItemInventory() {
 		initItems();
 	}
 
