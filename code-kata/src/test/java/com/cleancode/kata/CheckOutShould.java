@@ -116,7 +116,26 @@ public class CheckOutShould {
         assertEquals(new Double(240), checkOut.total());
 
     }
+    
+    @Test
+    public void should_apply_lowest_promotion_first() {
+        //given
+        scanItemTwoTimes("C");
+        scanItemTwoTimes("B");
+        scanItemTwoTimes("B");
+        
+        
+               
+        //when
+        checkOut.addPromotion(new ProductPromotion("B", 2, 45.00));
+        checkOut.addPromotion(new CrossProductPromotion(asList("B", "C") , 40.00));
+             
+        //then
+        assertEquals(new Double(125), checkOut.total());
 
+    }
+    
+   
     private void scanItemTwoTimes(String item) {
         checkOut.scan(item);
         checkOut.scan(item);
