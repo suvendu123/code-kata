@@ -29,17 +29,12 @@ public class Cart {
     }
 
     public void applyPromotion(List<Promotion> promotions) {
-        for (Promotion promotion: promotions) {
-            totalPrice += promotion.apply(this);
-        }
+        promotions.forEach(promotion -> totalPrice += promotion.apply(this));
+
     }
 
-  
-
     public Double getTotal() {
-        for (Map.Entry<Product, Integer> entry : itemsMap.entrySet()) {
-            totalPrice += entry.getKey().getPrice() * entry.getValue();
-        }
+        itemsMap.forEach((item, quantity) -> totalPrice += item.getPrice() * quantity);
         return totalPrice;
     }
 
@@ -50,6 +45,5 @@ public class Cart {
     public ProductInventory getItemService() {
         return itemService;
     }
-    
-    
+
 }

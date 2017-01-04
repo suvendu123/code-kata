@@ -1,5 +1,7 @@
 package com.cleancode.kata.promotion;
 
+import java.util.Map;
+
 import com.cleancode.kata.Cart;
 import com.cleancode.kata.item.Product;
 
@@ -13,11 +15,11 @@ public class ProductPromotion implements Promotion {
         this.quantity = quantity;
         this.discountedPrice = discountedPrice;
     }
-        
+
     public String getItemCode() {
         return itemCode;
     }
-   
+
     public int getQuantity() {
         return quantity;
     }
@@ -25,22 +27,30 @@ public class ProductPromotion implements Promotion {
     public double getDiscountedPrice() {
         return discountedPrice;
     }
-   
+
     @Override
     public double apply(Cart cart) {
-        double price = 0;
         Product product = cart.getItemService().getByCode(itemCode);
+        return cart.getItemsMap().containsKey(product) ? applyPromotion(cart, product) : 0;
+    }
+
+    private double applyPromotion(Cart cart, Product product) {
+        double price = 0;
         int divident = cart.getItemsMap().get(product) / this.getQuantity();
-        int reminder = cart.getItemsMap().get(product) % this.getQuantity();
         if (divident != 0) {
             price += divident * this.getDiscountedPrice();
         }
-        if (reminder != 0) {
-            cart.getItemsMap().put(product, reminder);
-        }else{
-            cart.getItemsMap().remove(product);
-        }
+        handleRemainingProduct(cart.getItemsMap(), product);
         return price;
+    }
+
+    private void handleRemainingProduct(Map<Product, Integer> productMap, Product product) {
+        if (productMap.get(product) % this.getQuantity() != 0) {
+            productMap.put(product, productMap.get(product) % this.getQuantity());
+        } else {
+            productMap.remove(product);
+        }
+
     }
 
 }

@@ -99,7 +99,7 @@ public class CheckOutShould {
     }
     
     @Test
-    public void should_apply_type_promotion_at_the_same_time() {
+    public void should_apply_all_type_promotion_at_the_same_time() {
         //given
         scanItemTwoTimes("A");
         scanItemTwoTimes("B");
@@ -110,6 +110,7 @@ public class CheckOutShould {
         //when
         checkOut.addPromotion(new CrossProductPromotion(asList("B", "A") , 70.00));
         checkOut.addPromotion(new ProductPromotion("B", 2, 45.00));
+        checkOut.addPromotion(new ProductPromotion("A", 3, 130.00));
         //then
         assertEquals(new Double(240), checkOut.total());
 

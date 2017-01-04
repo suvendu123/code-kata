@@ -27,6 +27,7 @@ public class CrossProductPromotion implements Promotion {
     }
 
     private double applyDiscount(List<Product> products, Map<Product, Integer> itemsMap) {
+        
         for (Product product : products) {
             if (itemsMap.get(product) != 0) {
                 itemsMap.put(product, itemsMap.get(product) - 1);
