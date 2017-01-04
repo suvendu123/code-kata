@@ -105,7 +105,6 @@ public class CheckOutShould {
         scanItemTwoTimes("B");
         scanItemTwoTimes("B");
         checkOut.scan("A");
-        
                
         //when
         checkOut.addPromotion(new CrossProductPromotion(asList("B", "A") , 70.00));
@@ -123,8 +122,6 @@ public class CheckOutShould {
         scanItemTwoTimes("C");
         scanItemTwoTimes("B");
         scanItemTwoTimes("B");
-        
-        
                
         //when
         checkOut.addPromotion(new ProductPromotion("B", 2, 45.00));

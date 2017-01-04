@@ -24,10 +24,6 @@ public class ProductPromotion implements Promotion {
         return quantity;
     }
 
-    public double getDiscountedPrice() {
-        return discountedPrice;
-    }
-    
     @Override
 	public double getPrice() {
 		return discountedPrice;
@@ -43,7 +39,7 @@ public class ProductPromotion implements Promotion {
         double price = 0;
         int divident = cart.getItemsMap().get(product) / this.getQuantity();
         if (divident != 0) {
-            price += divident * this.getDiscountedPrice();
+            price += divident * discountedPrice;
         }
         handleRemainingProduct(cart.getItemsMap(), product);
         return price;
