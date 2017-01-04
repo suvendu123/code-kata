@@ -3,12 +3,12 @@ package com.cleancode.kata.item;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
-public class Item {
+public class Product {
 
 	private String itemCode;
 	private double price;
 
-	public Item(String itemCode, double price) {
+	public Product(String itemCode, double price) {
 		this.itemCode = itemCode;
 		this.price = price;
 	}
@@ -36,8 +36,8 @@ public class Item {
 
 	@Override
 	public boolean equals(final Object obj) {
-		if (obj instanceof Item) {
-			final Item other = (Item) obj;
+		if (obj instanceof Product) {
+			final Product other = (Product) obj;
 			return new EqualsBuilder().append(itemCode, other.getItemCode()).isEquals();
 		} else {
 			return false;

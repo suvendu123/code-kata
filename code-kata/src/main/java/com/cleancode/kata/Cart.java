@@ -1,24 +1,25 @@
 package com.cleancode.kata;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import com.cleancode.kata.item.Item;
-import com.cleancode.kata.item.ItemInventory;
+import com.cleancode.kata.item.Product;
+import com.cleancode.kata.item.ProductInventory;
 import com.cleancode.kata.promotion.Promotion;
 
 public class Cart {
 
-    private Map<Item, Integer> itemsMap;
-    private ItemInventory itemService;
+    private Map<Product, Integer> itemsMap;
+    private ProductInventory itemService;
     private double totalPrice;
 
     public Cart() {
-        itemsMap = new HashMap<Item, Integer>();
-        itemService = new ItemInventory();
+        itemsMap = new HashMap<Product, Integer>();
+        itemService = new ProductInventory();
     }
 
-    public void addItem(Item item) {
+    public void addItem(Product item) {
         if (itemsMap.getOrDefault(item, null) != null) {
             itemsMap.put(item, itemsMap.get(item) + 1);
         } else {
@@ -27,24 +28,28 @@ public class Cart {
 
     }
 
-    public void applyRule(Map<String, Promotion> rules) {
-        for (Map.Entry<String, Promotion> entry : rules.entrySet()) {
-            applyRuleForItem(entry);
+    public void applyPromotion(List<Promotion> promotions) {
+        for (Promotion promotion: promotions) {
+            totalPrice += promotion.apply(this);
         }
     }
 
-    private void applyRuleForItem(Map.Entry<String, Promotion> entry) {
-        Item item = itemService.getByCode(entry.getKey());
-        if (itemsMap.containsKey(item)) {
-            totalPrice += entry.getValue().apply(item, itemsMap.get(item));
-            itemsMap.remove(item);
-        }
-    }
+  
 
     public Double getTotal() {
-        for (Map.Entry<Item, Integer> entry : itemsMap.entrySet()) {
+        for (Map.Entry<Product, Integer> entry : itemsMap.entrySet()) {
             totalPrice += entry.getKey().getPrice() * entry.getValue();
         }
         return totalPrice;
     }
+
+    public Map<Product, Integer> getItemsMap() {
+        return itemsMap;
+    }
+
+    public ProductInventory getItemService() {
+        return itemService;
+    }
+    
+    
 }
