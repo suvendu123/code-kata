@@ -8,13 +8,13 @@ import com.cleancode.kata.promotion.Promotion;
 
 public class CheckOut {
 
-    private ProductInventory itemService;
+    private ProductInventory productInventory;
     private List<Promotion> promotions;
     private Cart cart;
 
     public CheckOut() {
         cart = new Cart();
-        itemService = new ProductInventory();
+        productInventory = new ProductInventory();
         promotions = new ArrayList<Promotion>();
     }
 
@@ -25,7 +25,7 @@ public class CheckOut {
     }
 
     public void scan(String itemCode) {
-        cart.addItem(itemService.getByCode(itemCode));
+        cart.addItem(productInventory.getByCode(itemCode));
     }
 
     public void addPromotion(Promotion promotion) {

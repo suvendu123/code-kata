@@ -30,7 +30,7 @@ public class ProductPromotion implements Promotion {
 
     @Override
     public double apply(Cart cart) {
-        Product product = cart.getItemService().getByCode(itemCode);
+        Product product = cart.getProductInventory().getByCode(itemCode);
         return cart.getItemsMap().containsKey(product) ? applyPromotion(cart, product) : 0;
     }
 

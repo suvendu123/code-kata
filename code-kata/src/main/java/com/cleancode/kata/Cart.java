@@ -11,12 +11,12 @@ import com.cleancode.kata.promotion.Promotion;
 public class Cart {
 
     private Map<Product, Integer> itemsMap;
-    private ProductInventory itemService;
+    private ProductInventory productInventory;
     private double totalPrice;
 
     public Cart() {
         itemsMap = new HashMap<Product, Integer>();
-        itemService = new ProductInventory();
+        productInventory = new ProductInventory();
     }
 
     public void addItem(Product item) {
@@ -42,8 +42,8 @@ public class Cart {
         return itemsMap;
     }
 
-    public ProductInventory getItemService() {
-        return itemService;
+    public ProductInventory getProductInventory() {
+        return productInventory;
     }
 
 }

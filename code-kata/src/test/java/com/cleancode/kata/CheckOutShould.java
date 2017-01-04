@@ -111,6 +111,7 @@ public class CheckOutShould {
         checkOut.addPromotion(new CrossProductPromotion(asList("B", "A") , 70.00));
         checkOut.addPromotion(new ProductPromotion("B", 2, 45.00));
         checkOut.addPromotion(new ProductPromotion("A", 3, 130.00));
+        
         //then
         assertEquals(new Double(240), checkOut.total());
 
