@@ -2,8 +2,9 @@ package com.cleancode.kata.promotion;
 
 import java.util.List;
 import java.util.Map;
+import static java.util.Objects.isNull;
 import java.util.Optional;
-import java.util.stream.Collectors;
+import static java.util.stream.Collectors.toList;
 
 import com.cleancode.kata.Cart;
 import com.cleancode.kata.item.Product;
@@ -37,13 +38,13 @@ public class CrossProductPromotion implements Promotion {
 
     private List<Product> getProducts(Cart cart) {
         return productCodes.stream().map(code -> cart.getProductInventory().getByCode(code))
-                .collect((Collectors.toList()));
+                .collect((toList()));
     }
 
     private boolean isItemPresentInCart(List<Product> products, Map<Product, Integer> itemsMap) {
         products.forEach((product) -> removeZeroQuantity(product, itemsMap));
         Optional<Product> productNotPresent = products.stream()
-                .filter(product -> itemsMap.getOrDefault(product, null) == null).findFirst();
+                .filter(product -> isNull(itemsMap.getOrDefault(product, null))).findFirst();
         return productNotPresent.isPresent() ? false : true;
     }
 
